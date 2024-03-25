@@ -1,3 +1,4 @@
+// Variable et récupération des élements Html
 let maxWidth = window.innerWidth;
 let maxHeight = window.innerHeight;
 let container = document.querySelector(".container");
@@ -13,21 +14,22 @@ let permierePage = document.querySelector(".permierePage");
 let pageJeu = document.querySelector(".pageJeu");
 let retour = document.querySelector(".retour");
 
+// Céation de la classe insecte
 class Insecte {
   constructor(name, positionX, positionY) {
     this.name = name;
     this.positionX = positionX;
     this.positionY = positionY;
     this.imageInsecte = document.createElement("img");
-    this.tapetteSound = new Audio("./assets/sound/Fly_Swatter.wav"); // Ajoutez le chemin vers le fichier audio
+    this.tapetteSound = new Audio("./assets/sound/Fly_Swatter.wav"); // fichier audio
     document.addEventListener("click", (event) => this.checkCollision(event));
   }
-
+  // Méthode d'initialisation des modes de jeux Novice, Mediem et Expert
   init() {
     this.positionX = maxWidth / 2 - 50;
     this.positionY = maxHeight;
     this.display();
-    // Déplacer la mouche aléatoirement toutes les 2 secondes
+    // Déplacer la mouche aléatoirement toutes les 3 secondes
     setInterval(this.randomMouveNovice.bind(this), 3000);
     if (objectif === score) {
       this.finDuJeu();
@@ -37,7 +39,7 @@ class Insecte {
     this.positionX = maxWidth / 2 - 50;
     this.positionY = maxHeight;
     this.display();
-    // Déplacer la mouche aléatoirement toutes les 2 secondes
+    // Déplacer la mouche aléatoirement toutes les 1,5 secondes
     setInterval(this.randomMouveNovice.bind(this), 1500);
     if (objectif === score) {
       this.finDuJeu();
@@ -47,13 +49,13 @@ class Insecte {
     this.positionX = maxWidth / 2 - 50;
     this.positionY = maxHeight;
     this.display();
-    // Déplacer la mouche aléatoirement toutes les 2 secondes
+    // Déplacer la mouche aléatoirement toutes les 0,5 secondes
     setInterval(this.randomMouveNovice.bind(this), 500);
     if (objectif === score) {
       this.finDuJeu();
     }
   }
-
+  // Methode affichage des mouches
   display() {
     this.imageInsecte.src = "./assets/image/mouche-bleu.png";
     this.imageInsecte.style.position = "absolute";
@@ -64,6 +66,7 @@ class Insecte {
     container.appendChild(this.imageInsecte);
     this.imageInsecte.addEventListener("click", () => this.ecrasserMouche());
   }
+  // Méthode de déplacementaléatoires des mouches
   randomMouve() {
     // Générer des déplacements aléatoires de la mouche
     let maxX = window.innerWidth - this.imageInsecte.offsetWidth;
@@ -94,6 +97,7 @@ class Insecte {
     this.imageInsecte.style.left = randomX + "px";
     this.imageInsecte.style.top = randomY + "px";
   }
+  // Méthode pour vérifier la colision de la mouche et souris
   checkCollision(event) {
     // Vérifiez la collision entre le clic et la position de la mouche
     let mouseX = event.clientX;
@@ -109,6 +113,7 @@ class Insecte {
       this.ecrasserMouche();
     }
   }
+  // Méthode pour changement d'image de mouche lors de son écrasement
   ecrasserMouche() {
     // Jouer le son de tapette à mouche
     this.tapetteSound.play();
@@ -201,9 +206,10 @@ demarrageJeu.addEventListener("click", () => {
   permierePage.style.display = "none";
   pageJeu.style.display = "block";
 });
-
+// Création d'une mouche
 let moucheBleu = new Insecte("moucheBleu", 200, 200);
-// moucheBleu.display();
+
+// Bouton de démarrage des jeux en mode novice, expert, et medium
 startGame.addEventListener("click", () => {
   moucheBleu.init();
 });
@@ -214,6 +220,8 @@ novice.addEventListener("click", () => {
 expert.addEventListener("click", () => {
   moucheBleu.initExpert();
 });
+
+// bouton retour à la page d'accueil
 retour.addEventListener("click", () => {
   permierePage.style.display = "block";
   pageJeu.style.display = "none";
