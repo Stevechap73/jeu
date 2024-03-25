@@ -5,12 +5,13 @@ let startGame = document.querySelector(".startGame");
 let novice = document.querySelector(".novice");
 let expert = document.querySelector(".expert");
 let objectifChasseur = document.querySelector(".objectifChasseur");
-objectif = 3;
+objectif = 10;
 objectifChasseur.innerText = `Objectif du chasseur : ${objectif}`;
 let score = 0;
 let demarrageJeu = document.querySelector(".demarrageJeu");
 let permierePage = document.querySelector(".permierePage");
 let pageJeu = document.querySelector(".pageJeu");
+let retour = document.querySelector(".retour");
 
 class Insecte {
   constructor(name, positionX, positionY) {
@@ -27,7 +28,27 @@ class Insecte {
     this.positionY = maxHeight;
     this.display();
     // Déplacer la mouche aléatoirement toutes les 2 secondes
-    setInterval(this.randomMouve.bind(this), 2000);
+    setInterval(this.randomMouveNovice.bind(this), 3000);
+    if (objectif === score) {
+      this.finDuJeu();
+    }
+  }
+  initNovice() {
+    this.positionX = maxWidth / 2 - 50;
+    this.positionY = maxHeight;
+    this.display();
+    // Déplacer la mouche aléatoirement toutes les 2 secondes
+    setInterval(this.randomMouveNovice.bind(this), 1500);
+    if (objectif === score) {
+      this.finDuJeu();
+    }
+  }
+  initExpert() {
+    this.positionX = maxWidth / 2 - 50;
+    this.positionY = maxHeight;
+    this.display();
+    // Déplacer la mouche aléatoirement toutes les 2 secondes
+    setInterval(this.randomMouveNovice.bind(this), 500);
     if (objectif === score) {
       this.finDuJeu();
     }
@@ -44,6 +65,26 @@ class Insecte {
     this.imageInsecte.addEventListener("click", () => this.ecrasserMouche());
   }
   randomMouve() {
+    // Générer des déplacements aléatoires de la mouche
+    let maxX = window.innerWidth - this.imageInsecte.offsetWidth;
+    let maxY = window.innerHeight - this.imageInsecte.offsetHeight;
+    let randomX = Math.floor(Math.random() * maxX);
+    let randomY = Math.floor(Math.random() * maxY);
+    // Déplacer la mouche
+    this.imageInsecte.style.left = randomX + "px";
+    this.imageInsecte.style.top = randomY + "px";
+  }
+  randomMouveNovice() {
+    // Générer des déplacements aléatoires de la mouche
+    let maxX = window.innerWidth - this.imageInsecte.offsetWidth;
+    let maxY = window.innerHeight - this.imageInsecte.offsetHeight;
+    let randomX = Math.floor(Math.random() * maxX);
+    let randomY = Math.floor(Math.random() * maxY);
+    // Déplacer la mouche
+    this.imageInsecte.style.left = randomX + "px";
+    this.imageInsecte.style.top = randomY + "px";
+  }
+  randomMouveExpert() {
     // Générer des déplacements aléatoires de la mouche
     let maxX = window.innerWidth - this.imageInsecte.offsetWidth;
     let maxY = window.innerHeight - this.imageInsecte.offsetHeight;
@@ -91,10 +132,68 @@ class Insecte {
       nouvelleMouche.init();
     }, 300);
   }
+  ecrasserMoucheNovice() {
+    // Jouer le son de tapette à mouche
+    this.tapetteSound.play();
+    // Vérifiez si this.image est définie avant d'accéder à ses propriétés
+    this.imageInsecte.src = "./assets/image/mouche-ecrassee.png"; // Changer l'image de la mouche écrassée
+    this.imageInsecte.style.width = "100px"; // Réduire la taille de la mouche
+    // score
+    score++;
+    document.querySelector(
+      ".score"
+    ).innerText = `Nombre de mouches touchées : ${score}`;
+    // Attendre 1 seconde avant de réinitialiser la couleur
+    setTimeout(() => {
+      this.imageInsecte.src = "./assets/image/mouche-bleu.png"; // Revenir à la mouche bleu au bout de 1 secondes
+      // Créer une nouvelle instance de Insecte
+      let nouvelleMouche = new Insecte(
+        "moucheBleu",
+        Math.random() * window.innerWidth,
+        Math.random() * window.innerHeight
+      );
+      nouvelleMouche.initNovice();
+    }, 300);
+  }
+  ecrasserMoucheExpert() {
+    // Jouer le son de tapette à mouche
+    this.tapetteSound.play();
+    // Vérifiez si this.image est définie avant d'accéder à ses propriétés
+    this.imageInsecte.src = "./assets/image/mouche-ecrassee.png"; // Changer l'image de la mouche écrassée
+    this.imageInsecte.style.width = "100px"; // Réduire la taille de la mouche
+    // score
+    score++;
+    document.querySelector(
+      ".score"
+    ).innerText = `Nombre de mouches touchées : ${score}`;
+    // Attendre 1 seconde avant de réinitialiser la couleur
+    setTimeout(() => {
+      this.imageInsecte.src = "./assets/image/mouche-bleu.png"; // Revenir à la mouche bleu au bout de 1 secondes
+      // Créer une nouvelle instance de Insecte
+      let nouvelleMouche = new Insecte(
+        "moucheBleu",
+        Math.random() * window.innerWidth,
+        Math.random() * window.innerHeight
+      );
+      nouvelleMouche.initExpert();
+    }, 300);
+  }
+  effacerToutesLesMouches() {
+    let mouches = document.querySelectorAll(".fly");
+    mouches.forEach((mouche) => mouche.remove());
+  }
+  effacerLeScore() {
+    score = 0;
+    document.querySelector(
+      ".score"
+    ).innerText = `Nombre de mouches touchées : ${score}`;
+  }
 
   finDuJeu() {
     alert("Félicitation ! Vous avez écrasé toutes les mouches !");
-    document.getElementById("ecran-fin-jeu").style.display = "block";
+    alert("Vous pouvez continuer dans le mode Novice ou Expert");
+    this.effacerToutesLesMouches();
+    this.effacerLeScore();
   }
 }
 
@@ -107,4 +206,15 @@ let moucheBleu = new Insecte("moucheBleu", 200, 200);
 // moucheBleu.display();
 startGame.addEventListener("click", () => {
   moucheBleu.init();
+});
+
+novice.addEventListener("click", () => {
+  moucheBleu.initNovice();
+});
+expert.addEventListener("click", () => {
+  moucheBleu.initExpert();
+});
+retour.addEventListener("click", () => {
+  permierePage.style.display = "block";
+  pageJeu.style.display = "none";
 });
