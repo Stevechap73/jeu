@@ -40,9 +40,9 @@ class Insecte {
   initNovice() {
     this.positionX = maxWidth / 2 - 50;
     this.positionY = maxHeight;
-    this.display();
+    this.displayNocivce();
     // Déplacer la mouche aléatoirement toutes les 1,5 secondes
-    setInterval(this.randomMouveNovice.bind(this), 1500);
+    setInterval(this.randomMouve.bind(this), 1500);
     if (objectif === score) {
       this.finDuJeu();
     }
@@ -50,9 +50,9 @@ class Insecte {
   initExpert() {
     this.positionX = maxWidth / 2 - 50;
     this.positionY = maxHeight;
-    this.display();
+    this.displayExpert();
     // Déplacer la mouche aléatoirement toutes les 0,5 secondes
-    setInterval(this.randomMouveNovice.bind(this), 500);
+    setInterval(this.randomMouveExpert.bind(this), 500);
     if (objectif === score) {
       this.finDuJeu();
     }
@@ -67,6 +67,30 @@ class Insecte {
     this.imageInsecte.classList.add("fly");
     container.appendChild(this.imageInsecte);
     this.imageInsecte.addEventListener("click", () => this.ecrasserMouche());
+  }
+  displayNocivce() {
+    this.imageInsecte.src = "./assets/image/mouche-bleu.png";
+    this.imageInsecte.style.position = "absolute";
+    this.imageInsecte.style.left = this.positionX + "px";
+    this.imageInsecte.style.bottom = this.positionY + "px";
+    this.imageInsecte.style.width = "100px";
+    this.imageInsecte.classList.add("fly");
+    container.appendChild(this.imageInsecte);
+    this.imageInsecte.addEventListener("click", () =>
+      this.ecrasserMoucheNovice()
+    );
+  }
+  displayExpert() {
+    this.imageInsecte.src = "./assets/image/mouche-bleu.png";
+    this.imageInsecte.style.position = "absolute";
+    this.imageInsecte.style.left = this.positionX + "px";
+    this.imageInsecte.style.bottom = this.positionY + "px";
+    this.imageInsecte.style.width = "100px";
+    this.imageInsecte.classList.add("fly");
+    container.appendChild(this.imageInsecte);
+    this.imageInsecte.addEventListener("click", () =>
+      this.ecrasserMoucheExpert()
+    );
   }
   // Méthode de déplacementaléatoires des mouches
   randomMouve() {
@@ -129,7 +153,7 @@ class Insecte {
     ).innerText = `Nombre de mouches touchées : ${score}`;
     // Attendre 1 seconde avant de réinitialiser la couleur
     setTimeout(() => {
-      this.imageInsecte.src = "./assets/image/mouche-bleu.png"; // Revenir à la mouche bleu au bout de 1 secondes
+      // this.imageInsecte.src = "./assets/image/mouche-bleu.png"; // Revenir à la mouche bleu au bout de 1 secondes
       // Créer une nouvelle instance de Insecte
       let nouvelleMouche = new Insecte(
         "moucheBleu",
@@ -152,7 +176,7 @@ class Insecte {
     ).innerText = `Nombre de mouches touchées : ${score}`;
     // Attendre 1 seconde avant de réinitialiser la couleur
     setTimeout(() => {
-      this.imageInsecte.src = "./assets/image/mouche-bleu.png"; // Revenir à la mouche bleu au bout de 1 secondes
+      // this.imageInsecte.src = "./assets/image/mouche-bleu.png"; // Revenir à la mouche bleu au bout de 1 secondes
       // Créer une nouvelle instance de Insecte
       let nouvelleMouche = new Insecte(
         "moucheBleu",
@@ -175,7 +199,7 @@ class Insecte {
     ).innerText = `Nombre de mouches touchées : ${score}`;
     // Attendre 1 seconde avant de réinitialiser la couleur
     setTimeout(() => {
-      this.imageInsecte.src = "./assets/image/mouche-bleu.png"; // Revenir à la mouche bleu au bout de 1 secondes
+      // this.imageInsecte.src = "./assets/image/mouche-bleu.png"; // Revenir à la mouche bleu au bout de 1 secondes
       // Créer une nouvelle instance de Insecte
       let nouvelleMouche = new Insecte(
         "moucheBleu",
@@ -217,11 +241,11 @@ let moucheBleu = new Insecte("moucheBleu", 200, 200);
 
 // Bouton de démarrage des jeux en mode novice, expert, et medium
 startGame.addEventListener("click", () => {
-  moucheBleu.init();
+  moucheBleu.initNovice();
 });
 
 novice.addEventListener("click", () => {
-  moucheBleu.initNovice();
+  moucheBleu.init();
 });
 expert.addEventListener("click", () => {
   moucheBleu.initExpert();

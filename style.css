@@ -35,7 +35,8 @@ span {
   text-decoration: underline;
 }
 .permierePage p {
-  padding-bottom: 50px;
+  padding-block: 50px;
+  background-color: antiquewhite;
 }
 .pageJeu {
   display: none;
