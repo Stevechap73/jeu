@@ -5,49 +5,12 @@ body {
   width: 100%;
   height: 100vh;
 }
-body {
-  cursor: url("./assets/image/tapette-a-mouches.png");
-}
-/* .container {
-  width: 100%;
-  height: 100vh;
-  background-image: url("./assets/image/vitre.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-} */
+/* Transition pour left et top */
 .fly {
-  transition: left 1s ease, top 1s ease; /* Ajouter une transition pour left et top */
+  transition: left 1s ease, top 1s ease;
 }
-
-#blueFly {
-  /* width: 50px;
-    height: 50px;
-    background-color: blue;
-    position: absolute;
-    top: 50%;
-    left: 50%; */
+/* #blueFly {
   transform: translate(-50%, -50%);
-}
-
-#swatter {
-  width: 100px;
-  height: 100px;
-  background-color: transparent;
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  transition: transform 0.1s ease-in-out;
-  background-image: url("./assets/image/tapette-a-mouches-noir.png"); /* Changer le chemin vers votre image de tapette */
-  background-size: contain;
-  pointer-events: none; /* Pour que la tapette ne bloque pas les événements de souris */
-}
-.swat {
-  transform: translateX(-50%) translateY(-50px) rotate(45deg); /* Animation de la tapette à mouche */
-}
-/* .container {
-  display: flex;
-  justify-content: end;
 } */
 .permierePage {
   display: flex;
@@ -90,14 +53,15 @@ span {
 button {
   margin: 10px;
   padding: 10px;
-  color: orange;
+  color: lightcoral;
   font-size: 24px;
   font-weight: 900px;
-  background-color: aqua;
+  background-color: lightyellow;
   border: none;
+  border-radius: 20px;
 }
 button:hover {
-  background-color: lightgreen;
+  background-color: lightgrey;
   color: red;
   cursor: pointer;
 }
@@ -109,4 +73,5 @@ button:hover {
   padding-left: 10px;
   padding-block: 10px;
   font-weight: bold;
+  color: palevioletred;
 }

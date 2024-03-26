@@ -1,4 +1,4 @@
-// Variable et récupération des élements Html
+// Variable et récupération des élements HTML
 let maxWidth = window.innerWidth;
 let maxHeight = window.innerHeight;
 let container = document.querySelector(".container");
@@ -21,11 +21,13 @@ class Insecte {
     this.positionX = positionX;
     this.positionY = positionY;
     this.imageInsecte = document.createElement("img");
+    this.flySound = new Audio("./assets/sound/Fly-Flying-Birds.wav"); // fichier audio
     this.tapetteSound = new Audio("./assets/sound/Fly_Swatter.wav"); // fichier audio
     document.addEventListener("click", (event) => this.checkCollision(event));
   }
   // Méthode d'initialisation des modes de jeux Novice, Mediem et Expert
   init() {
+    this.flySound.play();
     this.positionX = maxWidth / 2 - 50;
     this.positionY = maxHeight;
     this.display();
@@ -195,8 +197,12 @@ class Insecte {
   }
 
   finDuJeu() {
-    alert("Félicitation ! Vous avez écrasé toutes les mouches !");
-    alert("Vous pouvez continuer dans le mode Novice ou Expert");
+    alert(
+      "Félicitation ! Vous avez écrasé toutes les mouches, vous pouvez aller à la pêche :) !"
+    );
+    alert(
+      "Vous ètes trop fort ! vous pouvez continuer dans le mode Médium ou Expert"
+    );
     this.effacerToutesLesMouches();
     this.effacerLeScore();
   }
