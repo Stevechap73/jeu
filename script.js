@@ -38,6 +38,7 @@ class Insecte {
     }
   }
   initNovice() {
+    this.flySound.play();
     this.positionX = maxWidth / 2 - 50;
     this.positionY = maxHeight;
     this.displayNocivce();
@@ -48,6 +49,7 @@ class Insecte {
     }
   }
   initExpert() {
+    this.flySound.play();
     this.positionX = maxWidth / 2 - 50;
     this.positionY = maxHeight;
     this.displayExpert();
